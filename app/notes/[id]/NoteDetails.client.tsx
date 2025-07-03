@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { fetchNoteById } from "@/lib/api";
-import css from './NoteDetails.client.module.css';
+import css from "./NoteDetails.client.module.css";
 
 interface NoteDetailsClientProps {
   noteId: number;
@@ -21,11 +21,7 @@ const getErrorMessage = () => (
 );
 
 const NoteDetailsClient = ({ noteId }: NoteDetailsClientProps) => {
-  const {
-    data,
-    isLoading,
-    error,
-  } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["note", noteId],
     queryFn: () => fetchNoteById(noteId),
     refetchOnMount: false,

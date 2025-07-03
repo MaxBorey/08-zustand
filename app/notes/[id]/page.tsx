@@ -1,43 +1,25 @@
-"use client";
-
+import NoteDetailsClient from "./NoteDetails.client";
 import { fetchNoteById } from "@/lib/api";
-import Loader from "@/app/loading";
-import { useQuery } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
-import css from "./NoteDetails.client.module.css";
-import ErrorMessage from "../filter/[...slug]/error";
 
-export default function NoteDetailsClient() {
-  const { id } = useParams<{ id: string }>();
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({ params }: PageProps) {
+  const { id } = await params;
   const noteId = Number(id);
-  const {
-    data: note,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["note", noteId],
-    queryFn: () => fetchNoteById(noteId),
-    refetchOnMount: false,
-  });
 
-  return (
-    <>
-      {isLoading && <Loader />}
-      {isError && !note && <ErrorMessage error={error} reset={() => {}}/>}
-      {note && (
-        <div className={css.container}>
-          <div className={css.item}>
-            <div className={css.header}>
-              <h2>{note.title}</h2>
-              <button className={css.editBtn}>Edit note</button>
-            </div>
-            <p className={css.tag}>{String(note.tag)}</p>
-            <p className={css.content}>{note.content}</p>
-            <p className={css.date}>Created date: {note.createdAt}</p>
-          </div>
-        </div>
-      )}
-    </>
-  );
+  const note = await fetchNoteById(noteId);
+
+  return {
+    title: note ? `Note: ${note.title}` : "Note not found",
+    description: note ? note.content.slice(0, 30) : "No content available",
+  };
+}
+
+export default async function NotePage({ params }: PageProps) {
+  const { id } = await params;
+  const noteId = Number(id);
+
+  return <NoteDetailsClient noteId={noteId} />;
 }

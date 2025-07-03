@@ -1,5 +1,10 @@
 import css from './page.module.css'
 
+export const metadata = {
+  title: 'Welcome to NoteHub',
+  description: 'NoteHub is a simple and efficient app for managing notes.',
+};
+
 export default function HomePage() {
   return <main>
   <div className={css.container}>

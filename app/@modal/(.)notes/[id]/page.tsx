@@ -10,6 +10,17 @@ interface NoteModalProps {
   params: Promise<{ id: string }>;
 }
 
+export async function generateMetadata({ params }: NoteModalProps) {
+  const { id } = await params
+  const noteId = Number(id);
+  console.log("generateMetadata called for noteId:", noteId); 
+  const note = await fetchNoteById(noteId)
+  return {
+    title: `Note: ${note.title}`,
+    description: note.content.slice(0, 30),
+  }
+}
+
 export default async function NoteModal({ params }: NoteModalProps) {
   const { id } = await params;
   const noteId = +id;

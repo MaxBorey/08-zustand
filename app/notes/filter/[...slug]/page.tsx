@@ -12,6 +12,16 @@ function isNoteTag(tag: any): tag is NoteTag {
   return validTags.includes(tag);
 }
 
+export async function generateMetadata({ params }: NotesByTagProps) {
+  const { slug } = await params;
+  const rawTag = !slug || slug.length === 0 || slug[0] === 'all' ? undefined : slug[0];
+  const tag = isNoteTag(rawTag) ? rawTag : undefined;
+  return {
+    title: tag ? `Notes tagged: ${tag}` : 'All Notes',
+    description: tag ? `Notes filtered by tag ${tag}` : 'All notes without filter',
+  };
+}
+
 export default async function NotesByTag({ params }: NotesByTagProps) {
   const { slug } = await params;
   const rawTag = !slug || slug.length === 0 || slug[0] === 'all' ? undefined : slug[0];
@@ -30,5 +40,3 @@ export default async function NotesByTag({ params }: NotesByTagProps) {
     />
   );
 }
-
-
