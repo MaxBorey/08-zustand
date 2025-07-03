@@ -16,9 +16,26 @@ export async function generateMetadata({ params }: NotesByTagProps) {
   const { slug } = await params;
   const rawTag = !slug || slug.length === 0 || slug[0] === 'all' ? undefined : slug[0];
   const tag = isNoteTag(rawTag) ? rawTag : undefined;
+
   return {
     title: tag ? `Notes tagged: ${tag}` : 'All Notes',
     description: tag ? `Notes filtered by tag ${tag}` : 'All notes without filter',
+    openGraph: {
+      title: tag ? `Notes tagged: ${tag}` : 'All Notes',
+      description: tag
+        ? `Notes filtered by tag ${tag}`
+        : 'All notes without filter',
+      url: 'https://notehub.com',
+      images: [
+        {
+          url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'NoteHub main page preview',
+        },
+      ],
+      type: 'website',
+    },
   };
 }
 
