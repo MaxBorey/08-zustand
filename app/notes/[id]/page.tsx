@@ -12,8 +12,22 @@ export async function generateMetadata({ params }: PageProps) {
   const note = await fetchNoteById(noteId);
 
   return {
-    title: note ? `Note: ${note.title}` : "Note not found",
-    description: note ? note.content.slice(0, 30) : "No content available",
+    title: `Note: ${note.title}`,
+    description: note.content.slice(0, 30),
+    openGraph: {
+      title: `Note: ${note.title}`,
+      description: note.content.slice(0, 100),
+      url: `https://notehub.com/notes/${noteId}`,
+      images: [
+        {
+          url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
+          width: 1200,
+          height: 630,
+          alt: `Note: ${note.title}`,
+        },
+      ],
+      type: 'article',
+    },
   };
 }
 
