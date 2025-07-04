@@ -69,6 +69,10 @@ export default function NotesClient({
     setIsModalOpen(false);
   }
 
+  if (invalidData) {
+    return <div style={{ color: 'red' }}>Invalid initial data provided.</div>;
+  }
+
   const notes: Note[] = data?.notes ?? [];
   const totalPages: number = data?.totalPages ?? 1;
 
@@ -88,7 +92,7 @@ export default function NotesClient({
             pageCount={totalPages}
             forcePage={page - 1}
             onPageChange={({ selected }) => setPage(selected + 1)}
-        />
+          />
         )}
 
         <button className={css.button} onClick={toggleModal}>
@@ -97,7 +101,7 @@ export default function NotesClient({
       </div>
 
       {isLoading && <strong>Loading notes...</strong>}
-      {isError && <div style={{ color: 'red' }}>Error loading notes</div>}
+      {isError && <div style={{ color: 'red' }}>Error loading notes: {error?.message}</div>}
       {isSuccess && notes.length > 0 && <NoteList notes={notes} />}
 
       {isModalOpen && (
