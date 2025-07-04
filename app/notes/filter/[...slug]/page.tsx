@@ -50,7 +50,7 @@ export default async function NotesByTag({ params }: NotesByTagProps) {
       initialTotalPages={data.totalPages}
       initialPage={1}
       initialSearch=""
-      initialTotal={data.total}
+      initialTotal={data.total ?? 0} 
       tag={tag}
     />
   );
