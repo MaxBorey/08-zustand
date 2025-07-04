@@ -20,16 +20,20 @@ export async function getNotes(
   perPage: number = 12,
   tag?: NoteTag,
 ): Promise<NotesApiResponse> {
-  const params: Record<string, any> = {
+  type ParamsType = {
+    page: number;
+    perPage: number;
+    search?: string;
+    tag?: NoteTag;
+  };
+  
+  const params: ParamsType = {
     page,
     perPage,
   };
-
-  if (search) params.search = search;
-  if (tag && tag.trim() !== '') {
-    params.tag = tag;
   
-  }
+  if (search) params.search = search;
+  if (tag && tag.trim() !== '') params.tag = tag;
 
   const response = await axios.get<NotesApiResponse>('/notes', { params });
   return response.data;
