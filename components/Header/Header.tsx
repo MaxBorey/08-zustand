@@ -1,10 +1,12 @@
 import TagsMenu from '../TagsMenu/TagsMenu';
 import css from './Header.module.css';
 import Link from 'next/link';
-import { getTags } from '../../lib/api';  
+
+  
 
 const Header = async () => {
-  const tags = await getTags();
+  const tags = ['Todo', 'Work', 'Personal', 'Meeting', 'Shopping'];
+
 
   return (
     <header className={css.header}>

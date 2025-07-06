@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link'; // додано для посилання
 import css from './Notes.module.css';
 import NoteList from '../../../../components/NoteList/NoteList';
 import Pagination from '../../../../components/Pagination/Pagination';
@@ -9,8 +10,6 @@ import { useQuery } from '@tanstack/react-query';
 import { useDebounce } from 'use-debounce';
 import { getNotes } from '../../../../lib/api';
 import { Note } from '../../../../types/note';
-import Modal from '@/components/Modal/Modal';
-import NoteForm from '@/components/NoteForm/NoteForm';
 import { NotesApiResponse, NoteTag } from '@/types/note';
 
 interface NotesClientProps {
@@ -33,7 +32,6 @@ export default function NotesClient({
   const [page, setPage] = useState(initialPage);
   const [searchTerm, setSearchTerm] = useState(initialSearch);
   const [debouncedSearchTerm] = useDebounce(searchTerm, 500);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const tag = initialTag;
 
   const invalidData =
@@ -62,13 +60,6 @@ export default function NotesClient({
     refetchOnMount: false,
   });
 
-  function toggleModal() {
-    setIsModalOpen(!isModalOpen);
-  }
-  function closeModal() {
-    setIsModalOpen(false);
-  }
-
   if (invalidData) {
     return <div style={{ color: 'red' }}>Invalid initial data provided.</div>;
   }
@@ -95,20 +86,14 @@ export default function NotesClient({
           />
         )}
 
-        <button className={css.button} onClick={toggleModal}>
+        <Link href="/notes/action/create" className={css.button}>
           Create note +
-        </button>
+        </Link>
       </div>
 
       {isLoading && <strong>Loading notes...</strong>}
       {isError && <div style={{ color: 'red' }}>Error loading notes: {error?.message}</div>}
       {isSuccess && notes.length > 0 && <NoteList notes={notes} />}
-
-      {isModalOpen && (
-        <Modal onClose={closeModal}>
-          <NoteForm onClose={closeModal} />
-        </Modal>
-      )}
     </div>
   );
 }

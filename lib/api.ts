@@ -40,12 +40,12 @@ export async function getNotes(
 }
 
 
-export async function createNote(
-  newNote: Omit<Note, 'id' | 'createdAt' | 'updatedAt'>
-): Promise<Note> {
-  const response = await axios.post<Note>('/notes', newNote);
-  return response.data;
-}
+// export async function createNote(
+//   newNote: Omit<Note, 'id' | 'createdAt' | 'updatedAt'>
+// ): Promise<Note> {
+//   const response = await axios.post<Note>('/notes', newNote);
+//   return response.data;
+// }
 
 export async function deleteNote(id: number): Promise<Note> {
   const response = await axios.delete<Note>(`/notes/${id}`);
@@ -57,15 +57,25 @@ export async function fetchNoteById (id: number): Promise<Note> {
   return response.data;
 };
 
-export async function getTags(): Promise<string[]> {
-  const response = await axios.get<{ notes: Note[] }>('/notes');
-  const notes = response.data.notes;
+// export async function getTags(): Promise<string[]> {
+//   const response = await axios.get<{ notes: Note[] }>('/notes');
+//   const notes = response.data.notes;
 
-  const tagsSet = new Set<string>();
-  notes.forEach(note => {
-    if (note.tag) tagsSet.add(note.tag);
-  });
+//   const tagsSet = new Set<string>();
+//   notes.forEach(note => {
+//     if (note.tag) tagsSet.add(note.tag);
+//   });
 
-  return Array.from(tagsSet);
-}
+//   return Array.from(tagsSet);
+// }
 
+export type NewNoteData = {
+  title: string;
+  content: string;
+  tag: string;
+};
+
+export const createNote = async (data: NewNoteData) => {
+  const res = await axios.post<Note>('/notes', data);
+  return res.data;
+};
