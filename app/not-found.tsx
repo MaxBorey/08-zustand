@@ -1,6 +1,7 @@
 import css from './page.module.css';
+import { Metadata } from 'next';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: '404 - Page Not Found | NoteHub',
   description: 'The page you are looking for does not exist on NoteHub.',
   openGraph: {

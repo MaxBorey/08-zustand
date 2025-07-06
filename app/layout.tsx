@@ -3,8 +3,9 @@ import "./globals.css";
 import Header from "../components/Header/Header";
 import TanStackProvider from "../components/TanStackProvider/TanStackProvider";
 import Footer from '../components/Footer/Footer';
+import { Metadata } from 'next';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'NoteHub - Your Notes App',
   description: 'Manage your notes efficiently with NoteHub',
   openGraph: {

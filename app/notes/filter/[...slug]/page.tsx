@@ -1,6 +1,7 @@
 import { getNotes } from '@/lib/api';
 import NotesClient from './Notes.client';
 import { NoteTag } from '@/types/note';
+import type { Metadata } from 'next'
 
 type NotesByTagProps = {
   params: Promise<{ slug: string[] }>;
@@ -12,7 +13,7 @@ function isNoteTag(tag: string): tag is NoteTag {
   return validTags.includes(tag as NoteTag);
 }
 
-export async function generateMetadata({ params }: NotesByTagProps) {
+export async function generateMetadata({ params }: NotesByTagProps): Promise<Metadata> {
   const { slug } = await params;
   const rawTag = !slug || slug.length === 0 || slug[0] === 'all' ? undefined : slug[0];
   const tag = rawTag && isNoteTag(rawTag) ? rawTag : undefined;

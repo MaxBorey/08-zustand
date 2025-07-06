@@ -1,13 +1,14 @@
 import NoteForm from '@/components/NoteForm/NoteForm';
 import css from './CreateNote.module.css';
+import type { Metadata } from 'next';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'NoteHub — Simple and Efficient Note Management',
   description: 'NoteHub is a simple and efficient application designed for managing personal notes. It keeps your thoughts organized and accessible in one place, whether you&#8217;re at home or on the go.',
   openGraph: {
     title: 'NoteHub — Simple and Efficient Note Management',
     description: 'NoteHub helps you keep your thoughts organized and accessible anywhere with a clean interface and keyword search.',
-    url: 'https://notehub.com',
+    url: 'https://08-zustand-khaki.vercel.app/notes/action/create',
     images: [
       {
         url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
